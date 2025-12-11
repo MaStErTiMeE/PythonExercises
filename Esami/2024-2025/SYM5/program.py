@@ -5,7 +5,7 @@
 ################################################################################
 ################################################################################
 
-""" Operazioni da fare PRIMA DI TUTTO:
+"""Operazioni da fare PRIMA DI TUTTO:
  1) Salvare questo file col nome program.py
  2) Assegnare le variabili sottostanti con il tuo
     NOME, COGNOME, NUMERO DI MATRICOLA
@@ -17,9 +17,10 @@ Per superare la prova è necessario:
 Il punteggio finale della prova è la somma dei punteggi dei problemi risolti.
 Per i DSA il punteggio viene scalato opportunamente (32*X/26).
 """
-nome       = "NOME"
-cognome    = "COGNOME"
-matricola  = "MATRICOLA"
+
+nome = "NOME"
+cognome = "COGNOME"
+matricola = "MATRICOLA"
 
 ################################################################################
 ################################################################################
@@ -39,7 +40,7 @@ matricola  = "MATRICOLA"
 """
 Func 1: 2 punti
 
-Implementa la funzione func1(testo : str, K : int) -> set[str] 
+Implementa la funzione func1(testo : str, K : int) -> set[str]
 che riceve come argomenti:
 - testo: una stringa contenente parole separate da caratteri non alfabetici
 - K: un intero
@@ -51,10 +52,37 @@ testo = '''sopra la panca la capra campa, sotto la panca la capra crepa!'''
 expected = {'capra', 'panca'}
 
 """
-def func1(testo : str, K : int) -> set[str]:
-    s = {word for word in testo.split() if sum(word) == K)}
-    return s
-    # completa la funzione
+
+
+def func1(testo: str, K: int) -> set[str]:
+    # 1. Pulizia del testo
+    # Costruiamo una nuova stringa sostituendo i caratteri non alfabetici con spazi
+    testo_pulito = ""
+    for char in testo:
+        if char.isalpha():
+            testo_pulito += char
+        else:
+            testo_pulito += " "
+
+    # 2. Creazione lista parole
+    # .split() ora gestisce correttamente gli spazi multipli creati sopra
+    parole = testo_pulito.split()
+
+    # 3. Conteggio frequenze
+    conteggi = {}
+    for parola in parole:
+        if parola in conteggi:
+            conteggi[parola] += 1
+        else:
+            conteggi[parola] = 1
+
+    # 4. Filtraggio risultato
+    soluzione = set()
+    for parola in conteggi:
+        if conteggi[parola] == K:
+            soluzione.add(parola)
+
+    return soluzione
 
 
 """
@@ -72,42 +100,43 @@ Implementa la funzione   func2(parole : list[str]) -> dict[str, list[str]]
 che riceve come argomenti:
     - parole: una lista di parole
 e che ritorna un dizionario che ha come chiavi le lettere iniziali delle parole,
-e come valori la lista della parole che hanno quella iniziale, 
+e come valori la lista della parole che hanno quella iniziale,
 ordinate per lunghezza crescente e in caso parità in ordine alfabetico decrescente.
 
 Esempio:
 parole = ['sei','sicuro','che','sopra','la','panca','le','capre','campino?',
           'certamente,','mentre','sotto','la','panca','le','capre','crepano!']
-expected = {'s': ['sei', 'sotto', 'sopra', 'sicuro'], 
-            'c': ['che', 'capre', 'capre', 'crepano!', 'campino?', 'certamente,'], 
-            'l': ['le', 'le', 'la', 'la'], 
-            'p': ['panca', 'panca'], 
+expected = {'s': ['sei', 'sotto', 'sopra', 'sicuro'],
+            'c': ['che', 'capre', 'capre', 'crepano!', 'campino?', 'certamente,'],
+            'l': ['le', 'le', 'la', 'la'],
+            'p': ['panca', 'panca'],
             'm': ['mentre']}
 """
-def func2(parole : list[str]) -> dict[str, list[str]]:
+
+
+def func2(parole: list[str]) -> dict[str, list[str]]:
     pass
     # completa la funzione
 
 
-
-'''
+"""
 parole = ['sei','sicuro','che','sopra','la','panca','le','capre','campino?',
         'certamente,','mentre','sotto','la','panca','le','capre','crepano!']
 print(func2(parole))
-'''
+"""
 
 # %% ----------------------------------- FUNC.3 ----------------------------------- #
 """
 Func 3: 2 punti
 
-Implementa la funzione    func3(D1 : dict[str,list[int]], D2 : dict[int,list[str]]) -> dict[str, list[str]] 
+Implementa la funzione    func3(D1 : dict[str,list[int]], D2 : dict[int,list[str]]) -> dict[str, list[str]]
 che riceve come argomenti:
     - D1: un dizionario che ha come chiavi delle parole e come valori liste di interi DIVERSI tra loro
     - D2: un dizionario che ha come chiavi degli interi e come valori liste di parole
 e che ritorna un dizionario che ha come chiavi delle parole e come valori liste di parole.
 Le chiavi sono le sole chiavi di D1 che hanno almeno uno degli interi ad esse associati che è una chiave di D2.
 Tutte le parole associate in D2 a tali interi devono apparire nella lista associata a quella chiave nel risultato.
-L'ordinamento delle parole nei valori del risultato è per dimensioni decrescenti 
+L'ordinamento delle parole nei valori del risultato è per dimensioni decrescenti
 e in caso di parità in ordine alfabetico crescente.
 
 Esempio:
@@ -115,11 +144,11 @@ D1 = { 'a':[1,2,3], 'b':[3,4,5] }
 D2 = { 1:['a','bb','ccc'], 3:['qq','z'], 5:['b','fff'] }
 expected = {'a': ['a', 'z', 'bb', 'qq', 'ccc'], 'b': ['b', 'z', 'qq', 'fff']}
 """
-def func3(D1 : dict[str,list[int]], D2 : dict[int,list[str]]) -> dict[str, list[str]]:
+
+
+def func3(D1: dict[str, list[int]], D2: dict[int, list[str]]) -> dict[str, list[str]]:
     pass
     # completa la funzione
-
-
 
 
 """
@@ -141,10 +170,10 @@ La funzione deve leggere il file di testo al percorso path_in
 e ritornare un dizionario che ha come chiavi le parole presenti nel file almeno K volte
 e come valori le liste degli interi che rappresentano il numero della riga in cui appare la parola.
 
-Successivamente la funzione deve scrivere su file path_out su ogni riga 
+Successivamente la funzione deve scrivere su file path_out su ogni riga
 la parola ed il numero di righe in cui essa appare, separati da spazio.
-Le righe del file path_out devono essere ordinate 
-- per numero di righe in cui sono apparse le parole in ordine decrescente 
+Le righe del file path_out devono essere ordinate
+- per numero di righe in cui sono apparse le parole in ordine decrescente
 - e in caso di parità in ordine alfabetico crescente.
 
 Esempio:
@@ -163,11 +192,11 @@ Il file out_1.txt conterrà:
 e la funzione restituirà:
     {'a': [0, 2], 'b': [0, 2, 3], 'aa': [1, 3]}
 """
-def func4(path_in : str, path_out : str, K : int) -> dict[str, list[str]]:
+
+
+def func4(path_in: str, path_out: str, K: int) -> dict[str, list[str]]:
     pass
     # completa la funzione
-
-
 
 
 # %% ----------------------------------- FUNC.5 ----------------------------------- #
@@ -192,7 +221,9 @@ path_png_in = 'func5/in_1.png'
 expected = {'a': [0, 2], 'b': [0, 2, 3], 'aa': [1, 3]}
 """
 import images
-def func5(path_png_in : str) -> dict[str, set[tuple[int,int]]]:
+
+
+def func5(path_png_in: str) -> dict[str, set[tuple[int, int]]]:
     pass
     # completa la funzione
 
@@ -206,7 +237,7 @@ che riceve come argomento:
 - radice: un albero binario formato da nodi tree.BinaryTree
 - lista_pesi: una lista di interi
 e che da esso costruisce ricorsivamente o usando funzioni o metodi ricorsivi
-un secondo albero binario che ha la stessa struttura del primo con i valori dei nodi moltiplicati 
+un secondo albero binario che ha la stessa struttura del primo con i valori dei nodi moltiplicati
 ciascuno per l'n-esimo valore di lista_pesi, dove n è la profondità del nodo nell'albero
 (considerando la radice a profondità 0).
 
@@ -216,7 +247,7 @@ Esempio:
 Se l'albero in input è:
    ___1___
    |     |
- __2__   3___         
+ __2__   3___
  |   |      |
  4   5      6
 e lista_pesi = [2,7,3,1]
@@ -228,11 +259,11 @@ l'albero in output sarà:
 12   15    18
 """
 import tree
-def ex1(radice : tree.BinaryTree, lista_pesi:list[int]) -> tree.BinaryTree:
+
+
+def ex1(radice: tree.BinaryTree, lista_pesi: list[int]) -> tree.BinaryTree:
     pass
     # completa la funzione
-
-
 
 
 # %% ----------------------------------- EX.2 ----------------------------------- #
@@ -257,22 +288,21 @@ Esempio:
     expected   = {'txt': {'ex2/A/C', 'ex2/A', 'ex2/A/B'}, 'pdf': {'ex2/A/C', 'ex2/A'}, 'png': {'ex2/A/C'}, 'gif': {'ex2/A/C'}}
 """
 import os
-def ex2(path : str, lista_estensioni : list[str]) -> dict[str, list[str]]:
+
+
+def ex2(path: str, lista_estensioni: list[str]) -> dict[str, list[str]]:
     pass
     # completa la funzione
 
 
-
-
 ######################################################################################
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # Scrivi qui i tuoi test addizionali, attenzione a non sovrascrivere
     # gli EXPECTED!
-    print('*' * 50)
-    print('ITA\nDevi eseguire il grade.py se vuoi debuggare con il grader incorporato.')
+    print("*" * 50)
+    print("ITA\nDevi eseguire il grade.py se vuoi debuggare con il grader incorporato.")
     print(
-        'Altrimenii puoi inserire qui del codice per testare le tue funzioni ma devi scriverti i casi che vuoi testare')
-    print('*' * 50)
-
-
+        "Altrimenii puoi inserire qui del codice per testare le tue funzioni ma devi scriverti i casi che vuoi testare"
+    )
+    print("*" * 50)
