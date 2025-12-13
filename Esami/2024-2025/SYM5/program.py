@@ -18,9 +18,11 @@ Il punteggio finale della prova è la somma dei punteggi dei problemi risolti.
 Per i DSA il punteggio viene scalato opportunamente (32*X/26).
 """
 
-nome = "NOME"
-cognome = "COGNOME"
-matricola = "MATRICOLA"
+from typing_extensions import Dict
+
+nome = "Adriano"
+cognome = "Koci"
+matricola = "2284272"
 
 ################################################################################
 ################################################################################
@@ -105,7 +107,7 @@ ordinate per lunghezza crescente e in caso parità in ordine alfabetico decresce
 
 Esempio:
 parole = ['sei','sicuro','che','sopra','la','panca','le','capre','campino?',
-          'certamente,','mentre','sotto','la','panca','le','capre','crepano!']
+          'certamente,','mentre','sotto','la','panca','le','capre','crepano!']`
 expected = {'s': ['sei', 'sotto', 'sopra', 'sicuro'],
             'c': ['che', 'capre', 'capre', 'crepano!', 'campino?', 'certamente,'],
             'l': ['le', 'le', 'la', 'la'],
@@ -115,8 +117,18 @@ expected = {'s': ['sei', 'sotto', 'sopra', 'sicuro'],
 
 
 def func2(parole: list[str]) -> dict[str, list[str]]:
-    pass
-    # completa la funzione
+    # facciamo passare un for all interno di parole e rileviamo le prime lettere e le mettiamo come chiave
+    # poi andiamo a controllare se la prima lattere della parole e uguale alla chiave la andiamo a mettere come valore della chiave
+    soluzione = {}
+    for parola in parole:
+        lettera = parola[0]
+        if lettera not in soluzione:
+            soluzione[lettera] = []
+        if parola not in soluzione[lettera]:
+            soluzione[lettera].append(parola)
+    for chiave in soluzione:
+        soluzione[chiave].sort()
+    return soluzione
 
 
 """
@@ -195,8 +207,28 @@ e la funzione restituirà:
 
 
 def func4(path_in: str, path_out: str, K: int) -> dict[str, list[str]]:
-    pass
-    # completa la funzione
+    d = leggiFile(path_in)
+    d_filtro = {k: v for k, v in d.items() if len(v) >= K}
+    d_sort = sorted(d_filtro.items(), key=lambda x: (-len(x[1]), x[0]))
+    soluzione = dict(d_filtro)
+    with open(path_out, "w", encoding="utf-8") as file:
+        for parola, righe in d_sort:
+            file.write(f"{parola} {len(righe)}\n")
+
+    return soluzione
+
+
+def leggiFile(filename):
+    d = {}
+    with open(filename, encoding="utf-8") as file:
+        for indice, riga in enumerate(file):
+            parole = riga.split()
+            for parola in parole:
+                if parola not in d:
+                    d[parola] = []
+                if parola in d:
+                    d[parola].append(indice)
+        return d
 
 
 # %% ----------------------------------- FUNC.5 ----------------------------------- #
@@ -220,7 +252,6 @@ Esempio:
 path_png_in = 'func5/in_1.png'
 expected = {'a': [0, 2], 'b': [0, 2, 3], 'aa': [1, 3]}
 """
-import images
 
 
 def func5(path_png_in: str) -> dict[str, set[tuple[int, int]]]:
@@ -287,7 +318,6 @@ Esempio:
     extensions = ["txt", "pdf", "png", "gif"]
     expected   = {'txt': {'ex2/A/C', 'ex2/A', 'ex2/A/B'}, 'pdf': {'ex2/A/C', 'ex2/A'}, 'png': {'ex2/A/C'}, 'gif': {'ex2/A/C'}}
 """
-import os
 
 
 def ex2(path: str, lista_estensioni: list[str]) -> dict[str, list[str]]:
@@ -305,4 +335,3 @@ if __name__ == "__main__":
     print(
         "Altrimenii puoi inserire qui del codice per testare le tue funzioni ma devi scriverti i casi che vuoi testare"
     )
-    print("*" * 50)
