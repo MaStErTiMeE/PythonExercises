@@ -159,7 +159,21 @@ expected = {'a': ['a', 'z', 'bb', 'qq', 'ccc'], 'b': ['b', 'z', 'qq', 'fff']}
 
 
 def func3(D1: dict[str, list[int]], D2: dict[int, list[str]]) -> dict[str, list[str]]:
-    pass
+    soluzione = {}
+    chiaviD2 = D2.keys
+    listaChiaviD2 = list(chiaviD2)
+    for chiave in D1 :
+        for valore in D2:
+            for qualcosa in listaChiaviD2 :
+                if D1[chiave] == qualcosa :
+                    if D1[chiave] not in soluzione:
+                        soluzione[chiave] = []
+                else :
+                    soluzione[chiave].append(valore)
+    soluzione_filtrata =  sorted(soluzione.items(), key=lambda x: (len(x[1]), x[0],reverse == True))
+    return soluzione 
+
+
     # completa la funzione
 
 
@@ -210,7 +224,7 @@ def func4(path_in: str, path_out: str, K: int) -> dict[str, list[str]]:
     d = leggiFile(path_in)
     d_filtro = {k: v for k, v in d.items() if len(v) >= K}
     d_sort = sorted(d_filtro.items(), key=lambda x: (-len(x[1]), x[0]))
-    soluzione = dict(d_filtro)
+    soluzione = dict(d_sort)
     with open(path_out, "w", encoding="utf-8") as file:
         for parola, righe in d_sort:
             file.write(f"{parola} {len(righe)}\n")
@@ -252,11 +266,23 @@ Esempio:
 path_png_in = 'func5/in_1.png'
 expected = {'a': [0, 2], 'b': [0, 2, 3], 'aa': [1, 3]}
 """
-
-
+import images
 def func5(path_png_in: str) -> dict[str, set[tuple[int, int]]]:
-    pass
-    # completa la funzione
+    soluzione= {}
+    img = images.load(path_png_in)
+    imgY = len(img)
+    imgX = len(img[0])
+    for y in range(imgY-1) : 
+        for x in range(imgX-1) :
+            pixel = img[y][x]
+            if pixel != (0,0,0) and pixel == img[y][x+1] and pixel == img[y+1][x] and pixel == img[y+1][x+1] :
+                if pixel not in soluzione :
+                    soluzione[pixel] = set()
+                soluzione[pixel].add((x,y))
+    return soluzione 
+
+
+
 
 
 # %% ----------------------------------- EX.1 ----------------------------------- #
