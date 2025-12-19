@@ -18,9 +18,9 @@ Attenzione! DEBUG=True in grade.py per migliorare il debug.
 Tuttavia, per testare correttamente la ricorsione, DEBUG=False è necessario.
 
 """
-name       = "NOME"
-surname    = "COGNOME"
-student_id = "MATRICOLA"
+name       = "Adriano"
+surname    = "Koci"
+student_id = "2284272"
 
 
 

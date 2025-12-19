@@ -18,25 +18,44 @@ def es49(fimm1,fimm2,fimm3):
       - restituisce il valore calcolato
     Per caricare e salvare i file PNG si possono usare load e save della libreria immagini.
     '''
-    # inserisci qui il tuo codice
     img1 = immagini.load(fimm1)
     img2 = immagini.load(fimm2)
-    w1, h1 = len(img1[0]), len(img1)
-    w2, h2 = len(img2[0]), len(img2)
-    # calcolo le dimensioni della nuova immagine
-    w3 = min(w1,w2)
-    h3 = min(h1,h2)
-    # creo la nuova immagine
-    img3 = [[(0, 0, 0) for _ in range(w3)] for _ in range(h3)]
-    count = 0
-    # lavoro sulla nuova immagine
-    for r in range(h3):
-      for c in range(w3):
-        img3[r][c] = img2[r][c]
-        if r % 2 == c % 2:
-          img3[r][c] = img1[r][c]
-        a, b, c = img3[r][c]
-        if (a+b+c) % 2 == 1:
-          count+=1
-    immagini.save(img3, fimm3)
-    return count
+    img3 = []
+    altezza_img_1 = len(img1)
+    larghezza_img_1 = len(img1[0])
+
+    altezza_img_2 = len(img2)
+    larghezza_img_2 = len(img2[0])
+
+    min_altezza_img = min(altezza_img_1,altezza_img_2)
+    min_larghezza_img = min(larghezza_img_1,larghezza_img_2)
+    
+    for y in range(min_altezza_img) :
+        nuovaRiga = []
+        for x in range(min_larghezza_img) :
+            pixel_img_1 = img1[y][x]
+            pixel_img_2 = img2[y][x]
+            if y % 2 == 0 and x % 2 == 0 or y % 2 != 0 and x % 2 != 0:
+                pixel_aggiungere = pixel_img_1
+            else :
+                pixel_aggiungere = pixel_img_2
+        nuovaRiga.append(pixel_aggiungere)
+    img3.append(nuovaRiga)
+
+    immagini.save(img3,fimm3)
+    altezzaImg3 = len(img3)
+    larghezzaImg3 = len(img3[0])
+    contatore = 0
+    
+    for x in range(altezzaImg3) :
+        for y in range(larghezzaImg3) :
+            somma = sum(img3[y][x])
+            if somma % 2 != 0 :
+                contatore += 1
+
+
+    return contatore
+
+
+
+

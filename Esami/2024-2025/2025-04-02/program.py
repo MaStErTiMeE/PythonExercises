@@ -19,9 +19,9 @@ Attenzione! DEBUG=True nel grade.py per migliorare il debugging.
 Per testare correttamente la ricorsione è, però, necessario DEBUG=False.
 
 """
-nome       = "N"
-cognome    = "C"
-matricola  = "20"
+nome       = "adriano"
+cognome    = "koci"
+matricola  = "2284272"
 
 
 #########################################
@@ -50,18 +50,37 @@ contenente le stringhe presenti soltanto in una delle due liste in ingresso
 dev'essere ordinata in ordine di lunghezza crescente e in caso di parità 
 in ordine alfabetico inverso.
 '''
-def func1(string_list1, string_list2):
-    res_list = [string for string in string_list1 + string_list2 if (string in string_list1) ^ (string in string_list2)]
-    # for string in string_list1:
-    #     if string not in string_list2:
-    #         res_list.append(string)
-    # for string in string_list2:
-    #     if string not in string_list1:
-    #         res_list.append(string)
-    res_list.sort(reverse=True)  # alfabetico inverso
-    res_list.sort(key=len)  # lunghezza crescente (stabile)
-    return res_list
+def func1(string_list1, string_list2) :
+    soluzione = []
 
+    # FASE 1: Cerchiamo elementi che sono in lista 1 MA NON in lista 2
+    for parola in string_list1:
+        if parola not in string_list2:
+            # Controllo extra: se la parola è già in 'soluzione', non la rimetto
+            # (serve se string_list1 contiene duplicati al suo interno)
+            if parola not in soluzione:
+                soluzione.append(parola)
+
+    # FASE 2: Cerchiamo elementi che sono in lista 2 MA NON in lista 1
+    for parola in string_list2:
+        if parola not in string_list1:
+            # Anche qui controlliamo di non averla già inserita
+            if parola not in soluzione:
+                soluzione.append(parola)
+
+    # FASE 3: Ordinamento
+    # Richiesta: lunghezza crescente e, a parità, alfabetico inverso.
+    
+    # 3a. Prima ordiniamo per il criterio secondario (Alfabetico Inverso)
+    # reverse=True mette dalla Z alla A
+    soluzione.sort(key=lambda x: x, reverse=True)
+    
+    # 3b. Poi ordiniamo per il criterio primario (Lunghezza)
+    # Python è "stabile": se due parole hanno la stessa lunghezza, 
+    # non cambia l'ordine alfabetico inverso che abbiamo appena dato.
+    soluzione.sort(key=len)
+
+    return soluzione
 # %% -------------------------------- FUNC.2 -------------------------------- #
 ''' func2: 2 punti
 Si definisca una funzione funct2(path_to_file) che riceve in ingresso
@@ -79,10 +98,21 @@ art
 Nota:
   Aprire il file con encoding 'utf-8'.
 '''
-def func2(pathname):
-    with open(pathname, encoding='utf-8') as f:
-        text = f.read()
-        return { c: text.count(c) for c in text }
+def func2(path_to_file):
+    soluzione = leggitesto(path_to_file)
+    return soluzione
+
+def leggitesto(filename) :
+    soluzione = {}
+    with open(filename , encoding = "utf-8") as file :
+        for riga in file :
+            for lettera in riga :
+                if lettera not  in soluzione :
+                    soluzione[lettera] = 1
+                else :
+                    soluzione[lettera] += 1 
+    return soluzione 
+
 
 # %% -------------------------------- FUNC.3 -------------------------------- #
 '''  func3: 2 punti
@@ -103,9 +133,16 @@ dell'esecuzione della funzione.
 '''
 
 def func3(a_list):
-    # Inserire qui il proprio codice
-    pass
-
+    lunghezza_ini = len(a_list)
+    massimo_lista = max(a_list)
+    minimo_lista = min(a_list)
+    filtrata= [i for i in a_list if i != massimo_lista and i != minimo_lista]
+    a_list[:] = filtrata
+    
+    lunghezza_fin = len(a_list)
+    risultato = lunghezza_ini - lunghezza_fin
+    
+    return risultato
 # %% -------------------------------- FUNC.4 -------------------------------- #
 """ func4: 6 punti
 Si definisca una funzione func4(input_filepath, output_filename) che

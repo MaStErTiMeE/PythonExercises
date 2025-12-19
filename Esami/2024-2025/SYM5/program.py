@@ -269,17 +269,27 @@ expected = {'a': [0, 2], 'b': [0, 2, 3], 'aa': [1, 3]}
 import images
 def func5(path_png_in: str) -> dict[str, set[tuple[int, int]]]:
     soluzione= {}
+    
     img = images.load(path_png_in)
-    imgY = len(img)
-    imgX = len(img[0])
-    for y in range(imgY-1) : 
-        for x in range(imgX-1) :
+
+    altezza = len(img)
+    larghezza = len(img[0])
+    nero = (0,0,0)
+    for y in range(altezza) :
+        for x in range(larghezza) :
             pixel = img[y][x]
-            if pixel != (0,0,0) and pixel == img[y][x+1] and pixel == img[y+1][x] and pixel == img[y+1][x+1] :
-                if pixel not in soluzione :
-                    soluzione[pixel] = set()
-                soluzione[pixel].add((x,y))
+            pixelDestro = img[y][x+1]
+            pixelBassoSinistra = img[y+1][x]
+            pixelBassoDestra = img[y+1][x+1]
+            pixelFuori = img[y][x+2]
+            if pixel != nero and pixel == pixelDestro and pixel == pixelBassoSinistra and pixel == pixelBassoDestra  and pixelFuori != nero :
+                if soluzione[pixel] not in soluzione :
+                    soluzione[pixel] = []
+                else :
+                    soluzione[pixel].append((y,x))
     return soluzione 
+
+    
 
 
 

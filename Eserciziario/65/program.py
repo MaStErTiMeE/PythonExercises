@@ -25,3 +25,31 @@ def es65(k,lista1,fout):
     '''
     # inserite qui il vostro codice
     
+    immagine_vuota = []
+    nero = (0,0,0)
+    for i in range(k)
+        riga = []
+        for j in range(k)
+            riga.append(nero)
+        immagine_vuota.append(riga)
+
+     
+    for y in range(len(immagine_vuota)) :
+        for x in range(len(immagine_vuota)) :
+            for posizione in lista1 :
+                x_lista = posizione[0]
+                y_lista = posizione[1]
+                grandezza_quadrato = posizione[2]
+                r_lista = posizione[3]
+                g_lista = posizione[4]
+                b_lista = posizione[5]
+                if x == x_lista and y == y_lista :
+                    for i in range(len(grandezza_quadrato)) :
+                        immagine_vuota[y][x + i] = (r_lista,g_lista,b_lista)
+                        immagine_vuota[y + i][x] = (r_lista,g_lista,b_lista)
+                        immagine_vuota[y + i][x + 1] = (r_lista,g_lista,b_lista)
+    contatore = 0
+    for y in range(len(immagine_vuota)) :
+        for x in range(len(immagine_vuota))
+
+
